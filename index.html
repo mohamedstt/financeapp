@@ -42,7 +42,7 @@
       </section>
       <section id="transaction">
         <h2 class="sr-only">Transactions</h2>
-        <a href="#" class="button new" onclick="Modal.open()">+ New Transactions</a>
+        <a href="#" class="button new" onclick="Modal.changeModal()">+ New Transactions</a>
         <table id="data-table">
           <thead>
             <tr>
@@ -53,24 +53,6 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="description">Workapp</td>
-              <td class="income">$ 5000,00</td>
-              <td class="date">21/01/2021</td>
-              <td><img src="assets/minus.svg" alt="remove transactions"></td>
-            </tr>
-            <tr>
-              <td class="description">Electricity bill</td>
-              <td class="expense">- $ 200,00</td>
-              <td class="date">23/01/2021</td>
-              <td><img src="assets/minus.svg" alt="remove transactions"></td>
-            </tr>
-            <tr>
-              <td class="description">Internet</td>
-              <td class="expense">- $ 100,00</td>
-              <td class="date">23/01/2021</td>
-              <td><img src="assets/minus.svg" alt="remove transactions"></td>
-            </tr>
           </tbody>
         </table>
       </section>
@@ -95,7 +77,7 @@
                 <input type="date"id="date" name="date" placeholder="21/02/2018"/>
             </div>
             <div class="input-group actions">
-              <a href="#" class="button cancel" onclick="Modal.close()">Cancel</a>
+              <a href="#" class="button cancel" onclick="Modal.changeModal()">Cancel</a>
               <button>Salvar</button>
             </div>
           </form>
@@ -106,15 +88,7 @@
     <footer>
       <p>Finnance<span class="logo-cifrao">$$</span></p>
     </footer>
-    <script>
-      const Modal = {
-        open(){
-          document.querySelector(".modal-overlay").classList.add('active')
-        },
-        close(){
-          document.querySelector('.modal-overlay').classList.remove('active')
-        }
-      }
-    </script>
+
+  <script src="./index.js"></script>
   </body>
 </html>
