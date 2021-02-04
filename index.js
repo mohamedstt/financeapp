@@ -44,17 +44,17 @@ const balanceCosts = {
     const tr = document.createElement("tr");
     tr.innerHTML = balanceCosts.innerHTMLTransaction(transaction);
 
-    balanceCosts.transactionContainer.appendChild(tr)
+    balanceCosts.transactionContainer.appendChild(tr);
   },
   innerHTMLTransaction(transaction) {
-    const cssClass = transaction.amount > 0 ? "income" : "expense"
+    const cssClass = transaction.amount > 0 ? "income" : "expense";
 
-    const amount = Utils.formatCurrency(transaction.amount)
+    const amount = Utils.formatCurrency(transaction.amount);
 
     const html = `
         <tr>
             <td class="description">${transaction.description}</td>
-            <td class=${cssClass}>${transaction.amount}</td>
+            <td class=${cssClass}>${amount}</td>
             <td class="date">${transaction.date}</td>
             <td><img src="assets/minus.svg" alt="remove transactions"></td>
         </tr>`;
@@ -63,11 +63,18 @@ const balanceCosts = {
 };
 
 const Utils = {
-    formatCurrency(value) {
-        const signal = Number(value) < 0 ? "-" : ""
-    }
-}
+  formatCurrency(value) {
+    const signal = Number(value) < 0 ? "-" : "";
+    value = String(value).replace(/\D/g, "");
+    value = Number(value) / 100;
+    value = value.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+    return signal + value;
+  },
+};
 
-transactions.forEach(function(transaction){
-    balanceCosts.addTransaction(transaction)
-})
+transactions.forEach(function (transaction) {
+  balanceCosts.addTransaction(transaction);
+});
