@@ -31,12 +31,11 @@ const Transaction = {
   add(transaction) {
     Transaction.all.push(transaction);
 
-    App.reload()
-
+    App.reload();
   },
-  remove(index){
-    Transaction.all.splice(index, 1)
-    App.reload()
+  remove(index) {
+    Transaction.all.splice(index, 1);
+    App.reload();
   },
   incomes() {
     let income = 0;
@@ -94,12 +93,21 @@ const balanceCosts = {
       Transaction.amount()
     );
   },
-  clearTransactions(){
-    balanceCosts.transactionContainer.innerHTML = ""
-  }
+  clearTransactions() {
+    balanceCosts.transactionContainer.innerHTML = "";
+  },
 };
 
 const Utils = {
+  formatAmount(value) {
+    value = Number(value) * 100;
+
+    return value;
+  },
+  formatDate(date) {
+    const splittedDate = date.split("-");
+    return `${splittedDate[2]}/${splittedDate[1]}/${splittedDate[0]}`;
+  },
   formatCurrency(value) {
     const signal = Number(value) < 0 ? "-" : "";
     value = String(value).replace(/\D/g, "");
@@ -113,10 +121,60 @@ const Utils = {
 };
 
 const Form = {
+  description: document.querySelector("input#description"),
+  amount: document.querySelector("input#amount"),
+  date: document.querySelector("input#date"),
+
+  getValues() {
+    return {
+      description: Form.description.value,
+      amount: Form.amount.value,
+      date: Form.date.value,
+    };
+  },
+  formatValues() {
+    let { description, amount, date } = Form.getValues();
+
+    amount = Utils.formatAmount(amount);
+
+    date = Utils.formatDate(date);
+
+    return {
+      description,
+      amount,
+      date,
+    };
+  },
+  clearFields() {
+    Form.description.value = "";
+    Form.amount.value = "";
+    Form.date.value = "";
+  },
+  validateFields() {
+    const { description, amount, date } = Form.getValues();
+
+    if (
+      description.trim() === "" ||
+      amount.trim() === "" ||
+      date.trim() === ""
+    ) {
+      throw new Error("Please, fill all fields");
+    }
+  },
+
   submit(event) {
-    console.log(event);
-  }
-}
+    event.preventDefault();
+    try {
+      Form.validateFields();
+      const transaction = Form.formatValues()
+      Transaction.add(transaction);
+      Form.clearFields();
+      Modal.changeModal();
+    } catch (error) {
+      alert(error.message);
+    }
+  },
+};
 
 const App = {
   init() {
@@ -124,13 +182,12 @@ const App = {
       balanceCosts.addTransaction(transaction);
     });
 
-    balanceCosts.updateBalance()
+    balanceCosts.updateBalance();
   },
   reload() {
-    balanceCosts.clearTransactions()
-    App.init()
+    balanceCosts.clearTransactions();
+    App.init();
   },
 };
 
 App.init();
-
