@@ -5,29 +5,21 @@ const Modal = {
   },
 };
 
+const Storage = {
+  get() {
+    return JSON.parse(localStorage.getItem("dev.finances:transactions")) || [];
+  },
+  set(transactions) {
+    localStorage.setItem(
+      "dev.finances:transactions",
+      JSON.stringify(transactions)
+    );
+  },
+};
+
 const Transaction = {
-  all: [
-    {
-      description: "WorkAPP",
-      amount: 500000,
-      date: "21/01/2021",
-    },
-    {
-      description: "Electricity Bill",
-      amount: -20000,
-      date: "21/01/2021",
-    },
-    {
-      description: "Internet",
-      amount: -10000,
-      date: "21/01/2021",
-    },
-    {
-      description: "Wokkkkkking",
-      amount: -50000,
-      date: "21/01/2021",
-    },
-  ],
+  all: Storage.get(),
+
   add(transaction) {
     Transaction.all.push(transaction);
 
@@ -64,11 +56,12 @@ const balanceCosts = {
   transactionContainer: document.querySelector("#data-table tbody"),
   addTransaction(transaction, index) {
     const tr = document.createElement("tr");
-    tr.innerHTML = balanceCosts.innerHTMLTransaction(transaction);
+    tr.innerHTML = balanceCosts.innerHTMLTransaction(transaction, index);
+    tr.dataset.index = index;
 
     balanceCosts.transactionContainer.appendChild(tr);
   },
-  innerHTMLTransaction(transaction) {
+  innerHTMLTransaction(transaction, index) {
     const cssClass = transaction.amount > 0 ? "income" : "expense";
 
     const amount = Utils.formatCurrency(transaction.amount);
@@ -78,7 +71,7 @@ const balanceCosts = {
             <td class="description">${transaction.description}</td>
             <td class=${cssClass}>${amount}</td>
             <td class="date">${transaction.date}</td>
-            <td><img src="assets/minus.svg" alt="remove transactions"></td>
+            <td><img onclick="Transaction.remove(${index})" src="assets/minus.svg" alt="remove transactions"></td>
         </tr>`;
     return html;
   },
@@ -100,7 +93,7 @@ const balanceCosts = {
 
 const Utils = {
   formatAmount(value) {
-    value = Number(value) * 100;
+    value = Number(value.replace(/\,\./g, "")) * 100;
 
     return value;
   },
@@ -166,7 +159,7 @@ const Form = {
     event.preventDefault();
     try {
       Form.validateFields();
-      const transaction = Form.formatValues()
+      const transaction = Form.formatValues();
       Transaction.add(transaction);
       Form.clearFields();
       Modal.changeModal();
@@ -178,11 +171,11 @@ const Form = {
 
 const App = {
   init() {
-    Transaction.all.forEach((transaction) => {
-      balanceCosts.addTransaction(transaction);
-    });
+    Transaction.all.forEach(balanceCosts.addTransaction);
 
     balanceCosts.updateBalance();
+
+    Storage.set(Transaction.all);
   },
   reload() {
     balanceCosts.clearTransactions();
