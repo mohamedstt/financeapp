@@ -23,6 +23,6 @@ This is a clone of flappybird made with javascript.
 
 <p align="center">
   <img src="https://github.com/mohamedstt/financeapp/blob/master/assets/read.gif">
-  <img src="https://github.com/mohamedstt/financeapp/blob/master/assets/homePsDesktop">
+  <img src="./assets/homePsDesktop.png">
   <img src="https://github.com/mohamedstt/financeapp/blob/master/assets/read.gif">
 </p>
