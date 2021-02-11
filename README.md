@@ -22,7 +22,7 @@ This is a clone of flappybird made with javascript.
 ## 🚀  App Preview 
 
 <p align="center">
-  <img src="https://github.com/mohamedstt/financeapp/blob/master/assets/read.gif">
   <img src="./assets/homePsDesktop.png">
-  <img src="https://github.com/mohamedstt/financeapp/blob/master/assets/read.gif">
+  <img src="./assets/homePsMobile1.png">
+  <img src="./assets/homePsMobile.png">
 </p>
