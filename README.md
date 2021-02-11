@@ -11,7 +11,7 @@ Finance APP
 
 ## 📖 About
 
-This is a clone of flappybird made with javascript.
+This is an application for control finances made with javascript.
 
 ## 🚀 Technologies:
 
