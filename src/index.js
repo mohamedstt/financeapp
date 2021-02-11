@@ -71,7 +71,7 @@ const balanceCosts = {
             <td class="description">${transaction.description}</td>
             <td class=${cssClass}>${amount}</td>
             <td class="date">${transaction.date}</td>
-            <td><img onclick="Transaction.remove(${index})" src="assets/minus.svg" alt="remove transactions"></td>
+            <td><img onclick="Transaction.remove(${index})" src="../assets/minus.svg" alt="remove transactions"></td>
         </tr>`;
     return html;
   },
